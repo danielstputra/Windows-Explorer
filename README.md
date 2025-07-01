@@ -1,62 +1,66 @@
-# 🧭 Explorer App
+# 🗭 Explorer App
 
-A full-stack Windows Explorer-like web application built with:
+A full-stack web application inspired by Windows Explorer.
 
-- **Backend**: [Bun](https://bun.sh), [Elysia](https://elysiajs.com), MySQL/MariaDB, TypeScript, Clean Architecture
-- **Frontend**: [Vue 3](https://vuejs.org), Composition API, Vite
-- **Architecture**: Clean Architecture (service, repository, entity, controller, route layers), REST API (versioned)
+Built with:
+
+* **Backend**: [Bun](https://bun.sh), [Elysia](https://elysiajs.com), MySQL/MariaDB, TypeScript
+* **Frontend**: [Vue 3](https://vuejs.org), Composition API, Vite
+* **Architecture**: Clean Architecture (controller, service, repository, entity), versioned REST API
 
 ---
 
 ## ✨ Features
 
-- Infinite-depth folder structure
-- Display subfolders and files
-- Dynamic versioned API (`v1`, etc.)
-- Global CORS and API Key middleware
-- Built-in seeders and schema creator
-- Custom error handling
-- Hash-based developer name
-- Fully scalable design (ready for millions of folders/files)
-- Monorepo ready
-- Ready for unit + E2E testing
-- Swagger (optional)
+* 🗂️ Infinite-depth folder structure
+* 📄 Display subfolders and files
+* 🔑 API key authentication
+* 🌐 Global CORS support
+* 🧱 Built-in schema creator and seeders
+* 🔧 Custom error handling
+* 🔀 Dynamic API versioning
+* 🔍 Hash-based developer identification
+* ⚙️ Monorepo ready & scalable
+* 🧪 Unit and E2E testing ready
+* 📘 Swagger integration (optional)
 
 ---
 
-## 🗂️ Project Structure
+## 🗓️ Project Structure
 
+```
 explorer-app-daniels/
 ├── backend/
-│ ├── src/
-│ │ ├── controllers/
-│ │ ├── routes/
-│ │ ├── services/
-│ │ ├── repositories/
-│ │ ├── entities/
-│ │ ├── models/
-│ │ ├── utils/
-│ │ ├── db/
-│ │ ├── tables/
-│ │ └── index.ts
+│   └── src/
+│       ├── controllers/
+│       ├── routes/
+│       ├── services/
+│       ├── repositories/
+│       ├── entities/
+│       ├── models/
+│       ├── utils/
+│       ├── db/
+│       ├── tables/
+│       └── index.ts
 ├── frontend/
-│ ├── src/
-│ │ ├── components/
-│ │ ├── composables/
-│ │ ├── services/
-│ │ ├── stores/
-│ │ ├── types/
-│ │ └── main.ts
+│   └── src/
+│       ├── components/
+│       ├── composables/
+│       ├── services/
+│       ├── stores/
+│       ├── types/
+│       └── main.ts
+```
 
 ---
 
 ## 🚀 Getting Started
 
-### 🧩 Prerequisites
+### ⚙️ Prerequisites
 
-- [Bun](https://bun.sh) `>=1.1`
-- [MySQL/MariaDB](https://www.mysql.com/) `>=5.7`
-- [Node.js](https://nodejs.org/) (for frontend only)
+* [Bun](https://bun.sh) `>=1.1`
+* [MySQL/MariaDB](https://www.mysql.com/) `>=5.7`
+* [Node.js](https://nodejs.org/) (for frontend only)
 
 ---
 
@@ -68,32 +72,34 @@ bun install
 cp .env.example .env
 ```
 
-### Edit .env:
+Edit file `.env` Anda:
 
+```env
 DB_HOST="localhost"
 DB_PORT=3306
 DB_USER="root"
-DB_PASS=
+DB_PASS=""
 DB_NAME="db_daniels"
 
-API_KEY="DanielsDeveloper"
 DEVELOPER_NAME="Daniels Trysyahputra"
 
 CORS_ORIGIN="http://localhost:5173,http://localhost:3000,https://danielsdeveloper.com"
-API_KEY="10cf03c1bbf9c2bcefd01c191833c38813fa877765c04c679ba4bba44c5c00aa"
+```
 
-### ⚙️ Run Backend:
+Jalankan backend:
 
 ```bash
 bun run src/index.ts
 ```
 
-### This will:
+📦 Ini akan secara otomatis:
 
-- Create the database if not exists
-- Create tables
-- Run seeders
-- Start API on http://localhost:3000
+* Membuat database (jika belum ada)
+* Membuat tabel
+* Menjalankan seeder
+* Menjalankan API di `http://localhost:3000`
+
+---
 
 ### 💻 Frontend Setup
 
@@ -103,46 +109,62 @@ npm install
 npm run dev
 ```
 
-Open: http://localhost:5173
+Buka di browser: [http://localhost:5173](http://localhost:5173)
 
-### 🔐 API Access
+---
 
+## 🔐 API Access
+
+Gunakan header berikut:
+
+```
 x-api-key: DanielsDeveloper
+```
 
-### 📦 API Endpoints
+---
 
-### 📁 Folder Endpoints — /api/folders
+## 📆 API Endpoints
 
-| Method | Endpoint                      | Description                        |
-| ------ | ----------------------------- | ---------------------------------- |
-| GET    | `/api/folders`                | Get all folders                    |
-| GET    | `/api/folders/:id/subfolders` | Get direct subfolders by folder id |
+### 📁 Folder Endpoints (`/api/folders`)
 
-### 📄 File Endpoints — /api/files
+| Method | Endpoint                      | Deskripsi                         |
+| ------ | ----------------------------- | --------------------------------- |
+| GET    | `/api/folders`                | Mendapatkan semua folder          |
+| GET    | `/api/folders/:id/subfolders` | Subfolder langsung dari folder ID |
 
-| Method | Endpoint                | Description                     |
-| ------ | ----------------------- | ------------------------------- |
-| GET    | `/api/files/folder/:id` | Get files under specific folder |
+### 📄 File Endpoints (`/api/files`)
 
-### API Versioning:
+| Method | Endpoint                | Deskripsi                             |
+| ------ | ----------------------- | ------------------------------------- |
+| GET    | `/api/files/folder/:id` | Mendapatkan file dari folder tertentu |
 
-| Method        | Example                       |
-| ------------- | ----------------------------- |
-| Query Param   | `?version=1`                  |
-| Header        | `x-api-version: 1`            |
-| Accept Header | `application/vnd.api.v1+json` |
+---
 
-### 🧪 Testing (Coming Soon)
+## 📌 API Versioning
 
-✅ Unit Test (Jest / Vitest)
-✅ Integration Test (Supertest / Elysia hooks)
-✅ E2E Test (Playwright / Cypress)
+Tersedia melalui:
 
-### 📜 License
+* Query parameter: `?version=1`
+* Header: `x-api-version: 1`
+* Accept Header: `application/vnd.api.v1+json`
+
+---
+
+## 🧪 Testing (Coming Soon)
+
+* ✅ Unit Test: Vitest / Jest
+* ✅ Integration Test: Supertest / Elysia hooks
+* ✅ E2E Test: Playwright / Cypress
+
+---
+
+## 📜 License
 
 MIT
 
-### 🧑‍💻 Developer
+---
 
-Daniels Trysyahputra
-SHA256: DanielsDeveloper (API key default)
+## 👨‍💻 Developer
+
+**Daniels Trysyahputra**
+🔐 SHA256 Key ID: `DanielsDeveloper`
